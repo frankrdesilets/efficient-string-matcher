@@ -16,6 +16,28 @@ bool HorspoolStringMatching(std::string pattern, std::string text) {
     int alphabetSize = 52; // the alphabet size (lowercase and uppercase letters)
     
     /*
+     The text is checked for unsupported characters. If any are found,
+     the text is returned as a non-match.
+     */
+    for (int i = 0; i < n; i++) {
+        /*
+         The current character is checked to be out of the range of
+         lower and uppercase letters in the ASCII table.
+         */
+        if ((text[i] < 65) || (text[i] > 122)) {
+            return false;
+        }
+        /*
+         The current character is checked to not be equal to
+         special characters occurring between lower and uppercase
+         letters in the ASCII table.
+         */
+        if((text[i] < 97) && (text[i] > 90)) {
+            return false;
+        }
+    }
+    
+    /*
      The algorithm utilizes input enhancement for a time-for-space tradeoff.
      Shift sizes are pre-computed and stored in a shift table to make repetitive
      character comparisions unnecessary. The table is indexed by possible
@@ -180,6 +202,33 @@ void report(std::string pattern, std::string fileName) {
  for that file.
  */
 void run(std::string pattern, std::vector<std::string> fileNames) {
+    
+    /*
+     The pattern is checked for unsupported characters. If any are found,
+     the text is returned as a non-match.
+     */
+    bool isInvalidPattern = false;
+    for (int i = 0; i < pattern.length(); i++) {
+        /*
+         The current character is checked to be out of the range of
+         lower and uppercase letters in the ASCII table.
+         */
+        if ((pattern[i] < 65) || (pattern[i] > 122)) {
+            isInvalidPattern = true;
+        }
+        /*
+         The current character is checked to not be equal to
+         special characters occurring between lower and uppercase
+         letters in the ASCII table.
+         */
+        if((pattern[i] < 97) && (pattern[i] > 90)) {
+            isInvalidPattern = true;
+        }
+        if (isInvalidPattern) {
+            std::cout << "Invalid pattern. Acceptable characters are lower and uppercase letters (a-z, A-Z). Numbers and special characters are not supported/allowed." << std::endl;
+            std::exit(0);
+        }
+    }
     
     /*
      A report is generated for each file.
