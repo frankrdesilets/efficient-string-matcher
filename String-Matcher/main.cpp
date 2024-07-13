@@ -247,11 +247,11 @@ void run(std::string pattern, std::vector<std::string> fileNames) {
 int main(int argc, const char * argv[]) {
     
     // File names in this list will be processed and have a report generated.
-    std::vector<std::string> fileNames {"inputfiles/main.txt"};
+    std::vector<std::string> inputFileNames {"inputfiles/sample.txt", "inputfiles/sample2.txt"};
     std::string pattern = "the"; // the pattern to be matched against each text in every file
     
     // runs the application with given file names and pattern to match
-    run(pattern, fileNames);
+    run(pattern, inputFileNames);
     
     return 0;
 }
