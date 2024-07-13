@@ -54,11 +54,11 @@ I built this application to practice concepts learned in my Algorithms course an
 
 ## Features
 
--	String matching with worst case efficiency in θ(n) for random texts
+-	String matching with worst case efficiency in θ(*n*) for random texts
 -	.txt file parsing
 -	Runs on multiple input files simultaneously
 -	Report generation for each file
-o	Reports print to the console and include information such as the total number of texts in the file, the total number of texts containing an occurrence of the pattern, and a list of all matching texts.
+    - Reports print to the console and include information such as the total number of texts in the file, the total number of texts containing an occurrence of the pattern, and a list of all matching texts.
 
 ## How to Install and Run
 
