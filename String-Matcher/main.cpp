@@ -9,7 +9,7 @@
  Returns true if the given "pattern" (a string of m characters) occurs at
  least once in the given "text" (a longer string of n characters).
  */
-bool HorspoolStringMatching(std::string pattern, std::string text) {
+bool HorspoolStringMatching(std::string pattern, std::string text, bool isTest) {
     
     int m = pattern.length(); // the length of the pattern
     int n = text.length(); // the length of the text
@@ -74,6 +74,19 @@ bool HorspoolStringMatching(std::string pattern, std::string text) {
     }
     
     /*
+     The shift table is printed for the current pattern if testing is enabled.
+     Used for testing.
+     */
+    if (isTest) {
+        std::cout << "Shift table for pattern \"" << pattern << "\": ";
+        for (int i = 0; i < alphabetSize; i++) {
+            std::cout << shiftTable[i]; // the shift table is printed
+        }
+        // the current text is printed
+        std::cout << " (Text: \"" << text << "\")" << std::endl;
+    }
+    
+    /*
      Horspool's String Matching algorithm
      */
     
@@ -101,7 +114,7 @@ bool HorspoolStringMatching(std::string pattern, std::string text) {
  (character sequences separated by a space or new line in
  a .txt file) that a given pattern occurs in.
  */
-std::vector<std::string> matchPatternToTexts(std::string pattern, std::vector<std::string> allTexts) {
+std::vector<std::string> matchPatternToTexts(std::string pattern, std::vector<std::string> allTexts, bool isTest) {
     
     /*
      Vector to be populated with every texts that has at least one occurrence of
@@ -117,7 +130,7 @@ std::vector<std::string> matchPatternToTexts(std::string pattern, std::vector<st
     for (auto itr = allTexts.begin(); itr != allTexts.end(); itr++) {
         std::string currentText = *itr; // the current text
         // the text is checked for an occurrence of the pattern
-        if (HorspoolStringMatching(pattern, currentText)) {
+        if (HorspoolStringMatching(pattern, currentText, isTest)) {
             matchingTexts.push_back(currentText); // the text is added to the vector
         }
     }
@@ -164,31 +177,45 @@ std::vector<std::string> textsFromFile(std::string fileName) {
  such as the total number of texts in the file, the total number of texts
  containing an occurrence of the pattern, and a list of all matching texts.
  */
-void report(std::string pattern, std::string fileName) {
+void report(std::string pattern, std::string fileName, bool isTest) {
+    
+    // a test identifier is printed if the file is being run for application testing
+    if (isTest) {
+        std::cout << " **TEST**" << std::endl;
+    }
+    
+    /*
+     A report is printed for the file, including information such as the 
+     total number of texts in the file, the total number of matching
+     texts, and a list of all matching texts.
+     */
+    
+    // prints report header
+    std::cout << "--- Report for \"" << fileName << "\" ---" << std::endl;
     
     // every text in the file
     std::vector<std::string> allTexts = textsFromFile(fileName);
     
     // every texts with at least one occurrence of the pattern
-    std::vector<std::string> matchingTexts = matchPatternToTexts(pattern, allTexts);
+    std::vector<std::string> matchingTexts = matchPatternToTexts(pattern, allTexts, isTest);
     
-    /*
-     A report is printed, including information such as the total number
-     of texts in the file, the total number of matching texts,
-     and a list of all matching texts.
-     */
-    std::cout << "--- Report for \"" << fileName << "\" ---" << std::endl;
+    // prints the current pattern
     std::cout << "Pattern to match: \"" << pattern << "\"" << std::endl;
+    
+    // prints the number of texts in the file
     std::cout << "Number of texts in file: " << allTexts.size() << std::endl;
+    
+    // prints the number of texts matching the pattern
     std::cout << "Number of texts with occurrence of pattern in file: " << matchingTexts.size() << std::endl;
     std::cout << std::endl;
     
+    // prints a list of all pattern-matching texts in the file
     std::cout << "Texts containing the pattern \"" << pattern << "\":" << std::endl;
     for (auto itr = matchingTexts.begin(); itr != matchingTexts.end(); itr++) {
         std::string currentText = *itr;
         std::cout << "-> " << currentText << std::endl;
     }
-    std::cout << "--- End of Report ---" << std::endl;
+    std::cout << "--- End of Report ---" << std::endl; // prints report end
     std::cout << std::endl;
 }
 
@@ -201,7 +228,7 @@ void report(std::string pattern, std::string fileName) {
  matching texts which is then reported to the console in a report
  for that file.
  */
-void run(std::string pattern, std::vector<std::string> fileNames) {
+void run(std::string pattern, std::vector<std::string> fileNames, bool isTest) {
     
     /*
      The pattern is checked for unsupported characters. If any are found,
@@ -235,8 +262,8 @@ void run(std::string pattern, std::vector<std::string> fileNames) {
      */
     for (auto itr = fileNames.begin(); itr != fileNames.end(); itr++) {
         
-        std::string currentFile = *itr;
-        report(pattern, currentFile);
+        std::string currentFile = *itr; // the current file being processed in the vector
+        report(pattern, currentFile, isTest);
     }
 }
 
@@ -246,12 +273,50 @@ void run(std::string pattern, std::vector<std::string> fileNames) {
  */
 int main(int argc, const char * argv[]) {
     
-    // File names in this list will be processed and have a report generated.
-    std::vector<std::string> inputFileNames {"inputfiles/sample.txt", "inputfiles/sample2.txt"};
+    // *--- INPUT ---*
+    
+    /*
+     File names in this list will be processed and have a report generated.
+     */
+    std::vector<std::string> inputFileNames {"inputfiles/sample.txt",
+        "inputfiles/sample2.txt"};
     std::string pattern = "the"; // the pattern to be matched against each text in every file
     
     // runs the application with given file names and pattern to match
-    run(pattern, inputFileNames);
+    run(pattern, inputFileNames, false);
+    
+    // *------*
+    
+    
+    // *--- TESTING ---*
+    
+    /*
+     File names in this list will be processed and have a report generated with testing
+     enabled. These files are used to test the application.
+     */
+//    std::vector<std::string> testFileNames {"testfiles/testSingleLine.txt",
+//        "testfiles/testMultipleLines.txt",
+//        "testfiles/testMultipleTextSameLine.txt",
+//        "testfiles/testMixedCase.txt",
+//        "testfiles/testUnsupportedCharacters.txt",
+//        "testfiles/testPatternBeginningOfText.txt",
+//        "testfiles/testPatternMiddleOfText.txt",
+//        "testfiles/testPatternEndOfText.txt",
+//        "testfiles/testIncompletePatternBeginningOfText.txt",
+//        "testfiles/testIncompletePatternMiddleOfText.txt",
+//        "testfiles/testIncompletePatternEndOfText.txt"};
+    
+//    pattern = "the"; // the pattern "the" is used for testing
+    
+    /*
+     Runs the application with given file names and pattern to match for testing.
+     Because isTest is true, the shift table will be printed for the pattern for each
+     text processed.
+     */
+//    run(pattern, testFileNames, true);
+    
+    // *------*
+    
     
     return 0;
 }
