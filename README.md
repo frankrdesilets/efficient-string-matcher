@@ -43,7 +43,7 @@ This application uses an implementation of Horspool’s String Matching algorith
 
 The pattern to match against texts is inputted by the user in main.cpp, and the texts to match against are parsed from input .txt files as character sequences separated by a space or new line. Multiple files can be run simultaneously, and reports are printed to the console for each file including information such as the total number of texts in the file, the total number of texts containing an occurrence of the pattern, and a list of all matching texts. The alphabet of acceptable characters are lowercase and uppercase letters (a-z, A-Z). Numbers and special characters are not supported.
 
-I built this project using C++ and Xcode 15.3.
+I built this project using C++ and Xcode 15.3. The application was thoroughly tested with 10 .txt file inputs. Tests include ensuring accurate file parsing, accurate pattern matching at the beginning, middle, and end of texts (including complete patterns {"the"} and incomplete patterns {"th"}), and correct letter case and unsupported character detection.
 
 ## Motivation
 
@@ -90,3 +90,7 @@ that
 
 3.	Navigate to the main method of String-Matcher/main.cpp.
 4.	Modify the vector “inputFileNames” contents. Every file included in this vector will be run.
+
+## Testing
+
+The application was thoroughly tested with 10 .txt file inputs. Tests include ensuring accurate file parsing, accurate pattern matching at the beginning, middle, and end of texts (including complete patterns {"the"} and incomplete patterns {"th"}), and correct letter case and unsupported character detection. Input files used for testing are located in testfiles/ and are run in the main method.
