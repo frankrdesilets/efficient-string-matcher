@@ -1,8 +1,8 @@
 ![Static Badge](https://img.shields.io/badge/License-MIT-blue)
 
-# String-Matcher
+# string-matcher
 
-This application parses .txt files that contain “texts”, utilizes Horspool’s String Matching algorithm to find texts that contain an occurrence of a given “pattern”, and prints a report for each file to the console.
+This application parses .txt files containing “texts,” uses Horspool’s String Matching algorithm to find texts containing an occurrence of a given “pattern,” and prints a report listing texts containing the pattern to the console.
 
 ### Sample Input File “sample.txt”:
 
