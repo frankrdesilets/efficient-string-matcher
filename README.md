@@ -2,7 +2,7 @@
 
 # string-matcher
 
-This application parses .txt files containing “texts,” uses Horspool’s String Matching algorithm to find texts containing an occurrence of a given “pattern,” and prints a report listing texts containing the pattern to the console.
+This application parses .txt files containing “texts,” uses Horspool’s String Matching algorithm to find texts containing an occurrence of a given “pattern,” and prints a report listing texts containing the pattern to the console. It was developed as a personal project to practice algorithms learned in Algorithms at Southwestern University.
 
 ### Sample Input File “sample.txt”:
 
